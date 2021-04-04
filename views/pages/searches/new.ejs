@@ -7,23 +7,24 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/new" method="get">
+    <form action="/searches" method="post">
         <fieldset>
             <legend>search by Title Author</legend>
             <label for="">
-                <input type="text" name="Enter a title or author" placeholder="Enter a title or author">
+                <input type="text" name="search" placeholder="Enter a title or author">
             </label>
             <br>
 
             <label>Title
-                <input type="radio" name="contact" value="title">
+                <input type="radio" name="search_by" value="title">
               </label>
               <br>
       
               <label>Author
-                <input type="radio" name="contact" value="author">
+                <input type="radio" name="search_by" value="author">
               </label>
               <br>
+              <button>Search the Google Books API</button>
       
         </fieldset>
     
