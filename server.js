@@ -20,6 +20,8 @@ app.get('/', (req, res) => res.render('pages/index'));
 app.get('/searches/new', (req, res) => res.render('pages/searches/new'));
 
 app.post('/searches', search);
+app.use('*', handelError);
+
 
 function search(req,res){
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
@@ -41,6 +43,11 @@ function Book(info) {
   Book.all.push(this);
 }
 Book.all = [];
+
+
+function handelError (req, res) {
+  res.status(500).send('Error');
+};
 
 
 

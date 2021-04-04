@@ -1,0 +1,39 @@
+img{
+    width: 250px;
+    height: 200px;
+}
+ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+li{
+    list-style: none;
+    display:list-item;
+    align-content:flex-end;
+    margin: 10px 10px;
+    width: 250px;
+    text-align: center;
+    border: 6px solid rgb(135, 135, 136);
+    box-shadow: rgb(82, 82, 83);;
+}
+
+p{
+    width: 100px;
+    text-align: center;
+    height: 120px;
+    width: 250px;
+    font-size: larger;
+    margin: auto;
+    font-weight: bold;
+    
+ }
+
+h5{
+    height: 86px;
+    width: 250px;
+    /* background-color:  rgb(13, 12, 110); */
+    margin: 0px;
+    
+    
+ }
