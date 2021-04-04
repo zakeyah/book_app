@@ -16,6 +16,7 @@ app.use(express.static('public'));
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
 
 app.get('/',(req,res)=> res.render('pages/index'));
+app.get('/new',(req,res)=> res.render('pages/searches/new'));
 
 
 
