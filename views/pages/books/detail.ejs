@@ -1,0 +1,12 @@
+<ul>
+    <% databaseResults.forEach( book => { %>
+        <li>
+            <img src="<%= book.image_url %>" alt="">
+            <h5><%= book.title %></h5>
+            <p><%= book.author %></p>
+            <p><%= book.isbn %></p>
+            <p><%= book.description %></p>
+            </form>
+        </li>
+    <% }) %>
+    </ul>
