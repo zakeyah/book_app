@@ -8,7 +8,19 @@
     <link href="/styles/base.css" rel="stylesheet"/>
 </head>
 <body>
-    <h1>Hello World</h1>
+    <h3><%= databaseResults.length %> Saved Books</h3>
+    <ul>
+        <% databaseResults.forEach( book => { %>
+            <li>
+                <img src="<%= book.image_url %>" alt="">
+                <h5><%= book.title %></h5>
+                <p><%= book.author %></p>
+                <form action="/book/<%= book.id %>"  method="get">
+                    <button>View Details</button>
+                </form>
+            </li>
+        <% }) %>
+        </ul>
     
 </body>
 </html>
