@@ -1,0 +1,6 @@
+INSERT INTO books (author,title,isbn,image_url, description) 
+VALUES('Dune','Frank Herbert','ISBN_13 9780441013593','http://books.google.com/books/content?id=B1hSG45JCX4C&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api','Follows the adventures of Paul Atreides, the son of a betrayed duke given up for dead on a treacherous desert planet and adopted by its fierce, nomadic people, who help him unravel his most unexpected destiny.');
+
+
+INSERT INTO books (author,title,isbn,image_url, description) 
+VALUES('Jolly Dinosaurs','Dinosaur Notebook','ISBN_10 1082425559','http://books.google.com/books/content?id=yPK-xwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api','Dinosaur Notebook Features: 120 blank wide lined white pages Two-sided wide ruled sheets Perfect sturdy matte softbound cover 8.5\" x 11\" the perfect size for your purse, tote bag, desk, backpack, school, home or work Can be used as a notebook, journal, diary or composition book for school and work Great for taking notes, writing, organizing, lists, journaling and brainstorming Composition Notebooks make the perfect gift for adults and kids for any gift giving occasion');
