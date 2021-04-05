@@ -32,8 +32,21 @@ client.connect().then(()=>app.listen(PORT, () => console.log(`Listening on port:
 app.get('/', renderIndex);
 app.get('/searches/new', (req, res) => res.render('pages/searches/new'));
 app.post('/searches', search);
-app.get('/book/:id', renderDetalis);
+app.get('/books/:id', renderDetalis);
+app.post('/books',handlerSave );
 app.use('*', handelError);
+
+function handlerSave(req,res){
+  const chosenBook =req.body;
+  const sql = 'INSERT INTO books (author,title,isbn,image_url, description) VALUES ($1, $2, $3, $4, $5);';
+  const values = Object.values(chosenBook);
+  console.log(chosenBook);
+  console.log(values);
+  client.query(sql,values)
+    .then(()=>{
+      res.render('pages/books/show',{databaseResults:[chosenBook]});
+    });
+}
 
 
 function renderDetalis(req,res){
@@ -81,8 +94,8 @@ function Book(info) {
 Book.all = [];
 
 
-function handelError (req, res) {
-  res.status(500).send('Error');
+function handelError(error, res) {
+  res.render('pages/error', { error: error });
 }
 
 // function addToDB ()
