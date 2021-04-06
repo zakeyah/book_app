@@ -3,7 +3,7 @@
 require('dotenv').config();
 const express = require('express');
 const pg = require('pg');
-// const { title } = require('node:process');
+const methodOverride = require('method-override');
 const superagent = require('superagent');
 
 const DATABASE_URL= process.env. DATABASE_URL;
@@ -21,6 +21,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(methodOverride('_method'));
 
 // app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
 client.connect().then(()=>app.listen(PORT, () => console.log(`Listening on port: ${PORT}`)));
@@ -35,12 +36,35 @@ app.get('/', renderIndex);
 app.get('/searches/new', (req, res) => res.render('pages/searches/new'));
 app.post('/searches', search);
 app.get('/books/:id', renderDetalis);
+app.put('/books/:id', updateBook);
+app.put('/books/:id', deleteBook);
 app.post('/books',handlerSave );
 app.use('*', handelError);
 
+function deleteBook(req,res){
+  const id =req.params.id;
+  const sql = 'DELETE FROM books WHERE id=$1';
+  
+  client.query(sql, [id])
+    .then(()=>{
+      res.redirect('/');
+    });
+}
+
+function updateBook(req,res){
+  let id = req.params.id;
+  let { author,title, isbn, image_url, description} = req.body;
+  let sql = `UPDATE tasks SET author=$1,title=$2,isbn=$3,image_url=$4,description=$5 WHERE id =$6;`;
+  let values = [author,title, isbn, image_url, description,id];
+  client.query(sql,values)
+    .then(()=>{
+      res.redirect(`/books/${id}`);
+    });
+}
+
 function handlerSave(req,res){
   const chosenBook =req.body;
-  const sql = 'INSERT INTO books (author,title,isbn,image_url, description) VALUES ($1, $2, $3, $4, $5);';
+  const sql = 'INSERT INTO books (author,title,isbn,image_url, description) VALUES ($1, $2, $3, $4, $5) RETURNING id;';
   const values = Object.values(chosenBook);
   console.log(chosenBook);
   console.log(values);
