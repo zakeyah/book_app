@@ -7,7 +7,9 @@ const pg = require('pg');
 const superagent = require('superagent');
 
 const DATABASE_URL= process.env. DATABASE_URL;
-const client = new pg.Client(DATABASE_URL);
+const NODE_ENV = process.env.NODE_ENV;
+const options = NODE_ENV === 'production' ? { connectionString: DATABASE_URL, ssl: { rejectUnauthorized: false } } : { connectionString: DATABASE_URL };
+const client = new pg.Client(options);
 
 client.on('error', err => { throw err; });
 
@@ -79,7 +81,7 @@ function search(req,res){
   if (req.body.search_by === 'author') { url += `+inauthor:${req.body.search[0]}`; }
   superagent.get(url)
     .then(apiResponse => apiResponse.body.items.map(bookResult => new Book(bookResult.volumeInfo)))
-    .then(results => res.render('pages/searches/show', { searchResults: results }));
+    .then(results =>res.render('pages/searches/show', { searchResults: results }));
 }
 
 
@@ -87,7 +89,7 @@ function Book(info) {
   this.image = (info.imageLinks&&info.imageLinks.thumbnail) || `https://i.imgur.com/J5LVHEL.jpg`;
   this.title = info.title ? info.title : 'No title was found.';
   this.author = (info.authors) ? info.authors : '....';
-  this.dicription = info.description ? info.description : 'No description found.';
+  this.description = info.description ? info.description : 'No description found.';
   this.isbn = info.industryIdentifiers ? `${info.industryIdentifiers[0].type} ${info.industryIdentifiers[0].identifier}` : 'No ISBN found';
   Book.all.push(this);
 }

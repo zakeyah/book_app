@@ -6,8 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>book-app</title>
     <link href="/styles/base.css" rel="stylesheet"/>
+    <link href="/styles/layout.css" rel="stylesheet"/>
+    <link href="/styles/modules.css" rel="stylesheet"/>
+    <link href="/styles/rest.css" rel="stylesheet"/>
 </head>
 <body>
+    <header>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/searches/new">Search</a></li>
+        </ul>
+    </header>
     <h3><%= databaseResults.length %> Saved Books</h3>
     <ul>
         <% databaseResults.forEach( book => { %>
