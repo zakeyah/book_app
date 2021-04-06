@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
    
-    <%- include('../../../layout/head') %>
+    <%- include('../../layout/head') %>
 
 </head>
 <header>
-    <%- include('../../../layout/header') %>
+    <%- include('../../layout/header') %>
 </header>
 <body>
     <%- include('./detail', {page_title: 'Details'}) %>
@@ -14,5 +14,11 @@
         <button>View Saved Books</button>
     </form>
     
+    
+    <section id="update-section">
+        <%- include('./edit.ejs'); %>
+    </section>
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="../../../js/app.js"></script>
 </html>
