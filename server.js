@@ -37,24 +37,27 @@ app.get('/searches/new', (req, res) => res.render('pages/searches/new'));
 app.post('/searches', search);
 app.get('/books/:id', renderDetalis);
 app.put('/books/:id', updateBook);
-app.put('/books/:id', deleteBook);
+app.delete('/books/:id', deleteBook);
 app.post('/books',handlerSave );
 app.use('*', handelError);
 
 function deleteBook(req,res){
   const id =req.params.id;
   const sql = 'DELETE FROM books WHERE id=$1';
-  
   client.query(sql, [id])
     .then(()=>{
       res.redirect('/');
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send('So sorry, something went wrong.');
     });
 }
 
 function updateBook(req,res){
   let id = req.params.id;
   let { author,title, isbn, image_url, description} = req.body;
-  let sql = `UPDATE tasks SET author=$1,title=$2,isbn=$3,image_url=$4,description=$5 WHERE id =$6;`;
+  let sql = `UPDATE books SET author=$1,title=$2,isbn=$3,image_url=$4,description=$5 WHERE id =$6;`;
   let values = [author,title, isbn, image_url, description,id];
   client.query(sql,values)
     .then(()=>{
@@ -66,8 +69,8 @@ function handlerSave(req,res){
   const chosenBook =req.body;
   const sql = 'INSERT INTO books (author,title,isbn,image_url, description) VALUES ($1, $2, $3, $4, $5) RETURNING id;';
   const values = Object.values(chosenBook);
-  console.log(chosenBook);
-  console.log(values);
+  console.log('yyyyyy',chosenBook);
+  console.log('mmmmmmm',values);
   client.query(sql,values)
     .then(()=>{
       res.render('pages/books/show',{databaseResults:[chosenBook]});
@@ -110,7 +113,7 @@ function search(req,res){
 
 
 function Book(info) {
-  this.image = (info.imageLinks&&info.imageLinks.thumbnail) || `https://i.imgur.com/J5LVHEL.jpg`;
+  this.image_url = (info.imageLinks&&info.imageLinks.thumbnail) || `https://i.imgur.com/J5LVHEL.jpg`;
   this.title = info.title ? info.title : 'No title was found.';
   this.author = (info.authors) ? info.authors : '....';
   this.description = info.description ? info.description : 'No description found.';

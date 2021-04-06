@@ -3,21 +3,23 @@
         <% databaseResults.forEach( book => { %>
     <form action="/books/<%= book.id %>?_method=PUT" method="post">
         <fieldset>
-            <label for="">blaaaaa</label>
+            
         <input type="text" name="title" value="<%= book.title %>">
         <br>
-        <label for="">nooooo</label>
+        
         <input type="text" name="author" value="<%= book.author %>">
         <br>
         <input type="text" name="isbn" value="<%= book.isbn %>">
         <br>
-        <input type="text" name="image" value="<%= book.image %>">
+        <input type="text" name="image_url" value="<%= book.image_url %>">
         <br>
         <textarea  name="description" value=""><%= book.description %></textarea>
         <br>
         <button type="submit" id="Update-Book">Update Book</button>
+        <button id="cancel">cancel</button>
     </fieldset>
 </form>
+
 <% }) %>
     </section>
     

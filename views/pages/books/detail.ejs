@@ -7,9 +7,9 @@
             <p><%= book.isbn %></p>
             <p><%= book.description %></p>
         </li>
-        <form action="/"  method="get">
-            <button id="Update Details">Update Details</button>
-        </form>
+        
+            <button id="Update-Details">Update Details</button>
+        
         <form action="/books/<%= book.id %>?_method=delete" method="post">
             <button>Delete Book</button>
         </form>
