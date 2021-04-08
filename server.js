@@ -67,22 +67,25 @@ function updateBook(req,res){
 
 function handlerSave(req,res){
   const chosenBook =req.body;
-  const sql = 'INSERT INTO books (author,title,isbn,image_url, description) VALUES ($1, $2, $3, $4, $5) RETURNING id;';
+  
+  const sql = 'INSERT INTO books (author,title,isbn,image_url, description) VALUES ($1, $2, $3, $4, $5) RETURNING *;';
   const values = Object.values(chosenBook);
-  console.log('yyyyyy',chosenBook);
-  console.log('mmmmmmm',values);
   client.query(sql,values)
-    .then(()=>{
-      res.render('pages/books/show',{databaseResults:[chosenBook]});
+    .then((result)=>{
+      // res.render('pages/books/show',{databaseResults:[chosenBook]});
+      res.redirect(`/books/${result.rows[0].id}`);
+
     });
 }
 
 
 function renderDetalis(req,res){
   const bookId = req.params.id;
+  console.log('id ',bookId)
   const sql = 'SELECT * FROM books WHERE id=$1;';
   client.query(sql,[bookId])
     .then(data=>{
+      console.log('id after',bookId)
       res.render('pages/books/show',{databaseResults:data.rows});
     });
 }
@@ -97,6 +100,7 @@ function renderIndex(req,res){
       console.log(error);
       res.status(500).send('So sorry, something went wrong.');
     });
+
 }
 
 
@@ -104,8 +108,8 @@ function search(req,res){
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
 
-  if (req.body.search_by === 'title') { url += `+intitle:${req.body.search[0]}`; }
-  if (req.body.search_by === 'author') { url += `+inauthor:${req.body.search[0]}`; }
+  if (req.body.search_by === 'title') { url += `+intitle:${req.body.search}`; }
+  if (req.body.search_by === 'author') { url += `+inauthor:${req.body.search}`; }
   superagent.get(url)
     .then(apiResponse => apiResponse.body.items.map(bookResult => new Book(bookResult.volumeInfo)))
     .then(results =>res.render('pages/searches/show', { searchResults: results }));
